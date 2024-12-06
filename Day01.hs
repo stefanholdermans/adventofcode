@@ -4,9 +4,7 @@ import Data.List (sort)
 
 type LocationID = Int
 
-type LocationIDs = [LocationID]
-
-type Lists = (LocationIDs, LocationIDs)
+type Lists = ([LocationID], [LocationID])
 
 parse :: String -> Lists
 parse s = (map fst pairs, map snd pairs)
