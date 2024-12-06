@@ -1,7 +1,22 @@
-parse :: String -> [[Int]]
+-- Utilities --
+
+count :: (a -> Bool) -> [a] -> Int
+count p = length . filter p
+
+-- Parsing --
+
+type Level = Int
+
+type Report = [Level]
+
+type Reports = [Report]
+
+parse :: String -> Reports
 parse = map (map read . words) . lines
 
-safe :: [Int] -> Bool
+--  Auxiliaries --
+
+safe :: Report -> Bool
 safe report@(m : n : _) = go report
   where
     p
@@ -11,15 +26,16 @@ safe report@(m : n : _) = go report
     go (i : j : ks) = p i j && go (j : ks)
     go _ = True
 
-countSafe :: [[Int]] -> Int
-countSafe = length . filter safe
+-- Part One --
 
-dampened :: [Int] -> [[Int]]
+solve :: Reports -> Int
+solve = count safe
+
+-- Part Two --
+
+dampened :: Report -> [Report]
 dampened [] = [[]]
 dampened (i : ks) = ks : map (i :) (dampened ks)
 
-safeWithDampening :: [Int] -> Bool
-safeWithDampening = any safe . dampened
-
-countSafeWithDampening :: [[Int]] -> Int
-countSafeWithDampening = length . filter safeWithDampening
+solve' :: Reports -> Int
+solve' = count (any safe . dampened)
