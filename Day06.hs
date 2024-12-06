@@ -53,8 +53,8 @@ patrol :: Grid -> Maybe (Set Pos)
 patrol grid = go Set.empty North (start grid)
   where
     go visited dir pos
-      | done grid pos = {-# SCC "DONE" #-} Just (Set.map snd visited)
-      | Set.member (dir, pos) visited = {-# SCC "LOOP" #-} Nothing
+      | done grid pos = Just (Set.map snd visited)
+      | Set.member (dir, pos) visited = Nothing
       | clear grid dir pos =
           go (Set.insert (dir, pos) visited) dir (move dir pos)
       | otherwise = go visited (turn dir) pos
