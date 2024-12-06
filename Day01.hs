@@ -1,16 +1,28 @@
 import Data.List (sort)
 
-parse :: String -> ([Int], [Int])
+-- Parsing --
+
+type LocationID = Int
+
+type LocationIDs = [LocationID]
+
+type Lists = (LocationIDs, LocationIDs)
+
+parse :: String -> Lists
 parse s = (map fst pairs, map snd pairs)
   where
     pairs = [(read w1, read w2) | l <- lines s, let [w1, w2] = words l]
 
-distance :: ([Int], [Int]) -> Int
-distance (ms, ns) = sum ds
-  where
-    ds = zipWith (\m n -> abs (m - n)) (sort ms) (sort ns)
+-- Part One --
 
-similarity :: ([Int], [Int]) -> Int
-similarity (ms, ns) = sum ss
+solve :: Lists -> Int
+solve (ms, ns) = sum distances
   where
-    ss = [m * length [n | n <- ns, m == n] | m <- ms]
+    distances = zipWith (\m n -> abs (m - n)) (sort ms) (sort ns)
+
+-- Part Two --
+
+solve' :: Lists -> Int
+solve' (ms, ns) = sum similarities
+  where
+    similarities = [m * length [n | n <- ns, m == n] | m <- ms]
