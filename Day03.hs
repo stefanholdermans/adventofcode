@@ -1,5 +1,14 @@
 import Data.Char (isDigit)
 
+-- Parsing --
+
+type Prog = String
+
+parse :: String -> Prog
+parse = id
+
+-- Auxiliaries
+
 data State
   = Mul
   | LParens
@@ -8,8 +17,8 @@ data State
   | Multiplicand Int
   | RParens Int Int
 
-parse :: String -> Int
-parse = go 0 Mul
+eval :: Prog -> Int
+eval = go 0 Mul
   where
     go acc _ [] = acc
     go acc Mul ('m' : 'u' : 'l' : cs) = go acc LParens cs
@@ -24,21 +33,21 @@ parse = go 0 Mul
     go acc (RParens m n) (')' : cs) = go (m * n + acc) Mul cs
     go acc _ (_ : cs) = go acc Mul cs
 
-parseWithConditionals :: String -> Int
-parseWithConditionals = go 0 True Mul
+-- Part One --
+
+solve :: Prog -> Int
+solve = eval
+
+-- Part Two --
+
+preprocess :: Prog -> Prog
+preprocess = go True
   where
-    go acc _ _ [] = acc
-    go acc False Mul ('d' : 'o' : '(' : ')' : cs) = go acc True Mul cs
-    go acc True Mul ('d' : 'o' : 'n' : '\'' : 't' : '(' : ')' : cs) =
-      go acc False Mul cs
-    go acc True Mul ('m' : 'u' : 'l' : cs) = go acc True LParens cs
-    go acc True LParens ('(' : cs) = go acc True Multiplier cs
-    go acc True Multiplier cs
-      | (ds@(_ : _), cs') <- span isDigit cs =
-          go acc True (Comma (read ds)) cs'
-    go acc True (Comma m) (',' : cs) = go acc True (Multiplicand m) cs
-    go acc True (Multiplicand m) cs
-      | (ds@(_ : _), cs') <- span isDigit cs =
-          go acc True (RParens m (read ds)) cs'
-    go acc True (RParens m n) (')' : cs) = go (m * n + acc) True Mul cs
-    go acc enabled _ (_ : cs) = go acc enabled Mul cs
+    go _ [] = []
+    go False ('d' : 'o' : '(' : ')' : cs) = go True cs
+    go False (_ : cs) = go False cs
+    go True ('d' : 'o' : 'n' : '\'' : 't' : '(' : ')' : cs) = go False cs
+    go True (c : cs) = c : go True cs
+
+solve' :: Prog -> Int
+solve' = eval . preprocess
