@@ -19,10 +19,13 @@ solvable ops (m, n : ns) = go n ns
       | acc > m = False
       | otherwise = or [go (acc `op` n) ns | op <- ops]
 
+calibrate :: [Int -> Int -> Int] -> Equations -> Int
+calibrate ops = sum . map fst . filter (solvable ops)
+
 -- Part One --
 
 solve :: Equations -> Int
-solve = sum . map fst . filter (solvable ops) where ops = [(+), (*)]
+solve = calibrate [(+), (*)]
 
 -- Part Two --
 
@@ -30,4 +33,4 @@ solve = sum . map fst . filter (solvable ops) where ops = [(+), (*)]
 m >< n = read (show m ++ show n)
 
 solve' :: Equations -> Int
-solve' = sum . map fst . filter (solvable ops) where ops = [(+), (*), (><)]
+solve' = calibrate [(+), (*), (><)]
