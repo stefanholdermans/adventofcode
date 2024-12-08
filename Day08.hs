@@ -26,16 +26,18 @@ parse input = Grid bounds freqs
 
 -- Auxiliaries --
 
+type Model = [Int]
+
 anti :: [Int] -> (Loc, Loc) -> [Loc]
-anti ks ((i, j), (i', j')) = [(i + k * di, j + k * dj) | k <- ks]
+anti model ((i, j), (i', j')) = [(i + k * di, j + k * dj) | k <- model]
   where
     di = i' - i
     dj = j' - j
 
-impact :: [Int] -> Grid -> Int
-impact ks (Grid bounds freqs) = unique locs
+impact :: Model -> Grid -> Int
+impact model (Grid bounds freqs) = unique locs
   where
-    locs = concatMap (prune . anti ks) (concatMap pairs freqs)
+    locs = concatMap (prune . anti model) (concatMap pairs freqs)
     pairs freq = [(loc, loc') | loc <- freq, loc' <- freq, loc /= loc']
     prune = takeWhile (inRange bounds)
 
