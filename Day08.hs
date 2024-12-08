@@ -28,7 +28,7 @@ parse input = Grid bounds freqs
 
 type Model = [Int]
 
-anti :: [Int] -> (Loc, Loc) -> [Loc]
+anti :: Model -> (Loc, Loc) -> [Loc]
 anti model ((i, j), (i', j')) = [(i + k * di, j + k * dj) | k <- model]
   where
     di = i' - i
