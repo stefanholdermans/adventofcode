@@ -38,10 +38,10 @@ defrag frags = go (sum (map size frags)) frags (reverse frags)
     go k frags (frag' : frags') | k < size frag' = go k frags [resize k frag']
     go k (frag@(File m _) : frags) frags' = frag : go (k - m) frags frags'
     go k frags (Free n : frags') = go (k - n) frags frags'
-    go k (Free m : frags) (File n j : frags')
+    go k (Free m : frags) (frag'@(File n j) : frags')
       | m < n = File m j : go (k - 2 * m) frags (File (n - m) j : frags')
-      | m == n = File n j : go (k - 2 * m) frags frags'
-      | otherwise = File n j : go (k - 2 * n) (Free (m - n) : frags) frags'
+      | m == n = frag' : go (k - 2 * m) frags frags'
+      | otherwise = frag' : go (k - 2 * n) (Free (m - n) : frags) frags'
 
 solve :: DiskMap -> Int
 solve = checksum . defrag
