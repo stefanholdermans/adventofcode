@@ -50,7 +50,7 @@ solve2 (rs, us) = sum [middle (correct u) | u <- us, not (validate rs u)]
   where
     correct = sortBy (ordering rs)
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

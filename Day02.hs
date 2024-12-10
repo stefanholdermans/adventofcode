@@ -40,7 +40,7 @@ dampened (i : ks) = ks : map (i :) (dampened ks)
 solve2 :: Reports -> Int
 solve2 = count (any safe . dampened)
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

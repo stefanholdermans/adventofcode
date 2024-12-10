@@ -51,7 +51,7 @@ solve1 = impact [2]
 solve2 :: Grid -> Int
 solve2 = impact [1 ..]
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

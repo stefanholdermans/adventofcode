@@ -62,7 +62,7 @@ solve2 ws = count matching candidates
     prune = filter (both (valid ws))
     matching = both (match ws "MAS")
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

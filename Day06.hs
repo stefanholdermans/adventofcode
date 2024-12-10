@@ -74,7 +74,7 @@ solve2 grid = count isNothing [patrol (obstruct pos grid) | pos <- visited]
   where
     visited = Set.toList (fromJust (patrol grid))
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

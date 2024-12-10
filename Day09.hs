@@ -74,7 +74,7 @@ defrag' = reverse . go . reverse
 solve2 :: DiskMap -> Int
 solve2 = checksum . defrag'
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

@@ -52,7 +52,7 @@ preprocess = go True
 solve2 :: Prog -> Int
 solve2 = eval . preprocess
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

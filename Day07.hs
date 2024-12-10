@@ -35,7 +35,7 @@ m >< n = read (show m ++ show n)
 solve2 :: Equations -> Int
 solve2 = calibrate [(+), (*), (><)]
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

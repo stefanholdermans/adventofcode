@@ -25,7 +25,7 @@ solve2 (ms, ns) = sum similarities
   where
     similarities = [m * length [n | n <- ns, m == n] | m <- ms]
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do

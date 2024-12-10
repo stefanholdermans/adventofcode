@@ -59,7 +59,7 @@ solve2 = sum . map rating . trails . tabulate
   where
     rating = Set.size
 
--- Entry point --
+-- Entry --
 
 main :: IO ()
 main = do
