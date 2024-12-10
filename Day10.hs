@@ -27,7 +27,7 @@ trails tab = [paths t | t <- elems tab, height t == 0]
 neighbours :: Table -> Pos -> [Tile]
 neighbours tab (i, j) = [tab ! p | p <- ps, inRange (bounds tab) p]
   where
-    ps = [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]
+    ps = [(i - 1, j), (i, j - 1), (i, j + 1), (i + 1, j)]
 
 succs :: Table -> Pos -> [Tile]
 succs tab p = [t | t <- neighbours tab p, height t == h + 1]
