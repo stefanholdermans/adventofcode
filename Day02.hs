@@ -28,8 +28,8 @@ safe report@(m : n : _) = go report
 
 -- Part One --
 
-solve :: Reports -> Int
-solve = count safe
+solve1 :: Reports -> Int
+solve1 = count safe
 
 -- Part Two --
 
@@ -37,5 +37,14 @@ dampened :: Report -> [Report]
 dampened [] = [[]]
 dampened (i : ks) = ks : map (i :) (dampened ks)
 
-solve' :: Reports -> Int
-solve' = count (any safe . dampened)
+solve2 :: Reports -> Int
+solve2 = count (any safe . dampened)
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

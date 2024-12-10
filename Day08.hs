@@ -43,10 +43,19 @@ impact model (Grid bounds freqs) = unique locs
 
 -- Part One --
 
-solve :: Grid -> Int
-solve = impact [2]
+solve1 :: Grid -> Int
+solve1 = impact [2]
 
 -- Part Two --
 
-solve' :: Grid -> Int
-solve' = impact [1 ..]
+solve2 :: Grid -> Int
+solve2 = impact [1 ..]
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

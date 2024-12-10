@@ -38,8 +38,8 @@ probe (i, j) = [[(f i k, g j k) | k <- [0 .. 3]] | f <- fs, g <- fs]
   where
     fs = [const, (+), (-)]
 
-solve :: WordSearch -> Int
-solve ws = count matching candidates
+solve1 :: WordSearch -> Int
+solve1 ws = count matching candidates
   where
     candidates = concatMap (prune . probe) (indices ws)
     prune = filter (valid ws)
@@ -55,9 +55,18 @@ probe' (i, j) = [(l, l') | l <- lines id, l' <- lines negate]
     lines g = [[(f i k, f j (g k)) | k <- [-1 .. 1]] | f <- fs]
     fs = [(+), (-)]
 
-solve' :: WordSearch -> Int
-solve' ws = count matching candidates
+solve2 :: WordSearch -> Int
+solve2 ws = count matching candidates
   where
     candidates = concatMap (prune . probe') (indices ws)
     prune = filter (both (valid ws))
     matching = both (match ws "MAS")
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

@@ -61,15 +61,24 @@ patrol grid = go Set.empty North (start grid)
 
 -- Part One --
 
-solve :: Grid -> Int
-solve = Set.size . fromJust . patrol
+solve1 :: Grid -> Int
+solve1 = Set.size . fromJust . patrol
 
 -- Part Two --
 
 obstruct :: Pos -> Grid -> Grid
 obstruct pos grid = grid {cells = cells grid // [(pos, '#')]}
 
-solve' :: Grid -> Int
-solve' grid = count isNothing [patrol (obstruct pos grid) | pos <- visited]
+solve2 :: Grid -> Int
+solve2 grid = count isNothing [patrol (obstruct pos grid) | pos <- visited]
   where
     visited = Set.toList (fromJust (patrol grid))
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

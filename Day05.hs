@@ -34,8 +34,8 @@ middle u = u !! (length u `div` 2)
 
 -- Part One --
 
-solve :: ([Rule], [Update]) -> Int
-solve (rs, us) = sum [middle u | u <- us, validate rs u]
+solve1 :: ([Rule], [Update]) -> Int
+solve1 (rs, us) = sum [middle u | u <- us, validate rs u]
 
 -- Part Two --
 
@@ -45,7 +45,16 @@ ordering rules i j
   | i == j = EQ
   | otherwise = GT
 
-solve' :: ([Rule], [Update]) -> Int
-solve' (rs, us) = sum [middle (correct u) | u <- us, not (validate rs u)]
+solve2 :: ([Rule], [Update]) -> Int
+solve2 (rs, us) = sum [middle (correct u) | u <- us, not (validate rs u)]
   where
     correct = sortBy (ordering rs)
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

@@ -47,14 +47,23 @@ tabulate rows@(cols : _) = tab
 
 -- Part One --
 
-solve :: Grid -> Int
-solve = sum . map score . trails . tabulate
+solve1 :: Grid -> Int
+solve1 = sum . map score . trails . tabulate
   where
     score = Set.size . Set.map last
 
 -- Part Two --
 
-solve' :: Grid -> Int
-solve' = sum . map rating . trails . tabulate
+solve2 :: Grid -> Int
+solve2 = sum . map rating . trails . tabulate
   where
     rating = Set.size
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

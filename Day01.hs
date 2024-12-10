@@ -13,14 +13,23 @@ parse s = (map fst pairs, map snd pairs)
 
 -- Part One --
 
-solve :: Lists -> Int
-solve (ms, ns) = sum distances
+solve1 :: Lists -> Int
+solve1 (ms, ns) = sum distances
   where
     distances = zipWith (\m n -> abs (m - n)) (sort ms) (sort ns)
 
 -- Part Two --
 
-solve' :: Lists -> Int
-solve' (ms, ns) = sum similarities
+solve2 :: Lists -> Int
+solve2 (ms, ns) = sum similarities
   where
     similarities = [m * length [n | n <- ns, m == n] | m <- ms]
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

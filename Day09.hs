@@ -43,8 +43,8 @@ defrag frags = go (sum (map size frags)) frags (reverse frags)
       | m == n = frag' : go (k - 2 * m) frags frags'
       | otherwise = frag' : go (k - 2 * n) (Free (m - n) : frags) frags'
 
-solve :: DiskMap -> Int
-solve = checksum . defrag
+solve1 :: DiskMap -> Int
+solve1 = checksum . defrag
 
 -- Part Two --
 
@@ -71,5 +71,14 @@ defrag' = reverse . go . reverse
       Just frags' -> pad n (go frags')
     go (Free n : frags) = pad n (go frags)
 
-solve' :: DiskMap -> Int
-solve' = checksum . defrag'
+solve2 :: DiskMap -> Int
+solve2 = checksum . defrag'
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

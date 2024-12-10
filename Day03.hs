@@ -35,8 +35,8 @@ eval = go 0 Mul
 
 -- Part One --
 
-solve :: Prog -> Int
-solve = eval
+solve1 :: Prog -> Int
+solve1 = eval
 
 -- Part Two --
 
@@ -49,5 +49,14 @@ preprocess = go True
     go True ('d' : 'o' : 'n' : '\'' : 't' : '(' : ')' : cs) = go False cs
     go True (c : cs) = c : go True cs
 
-solve' :: Prog -> Int
-solve' = eval . preprocess
+solve2 :: Prog -> Int
+solve2 = eval . preprocess
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)

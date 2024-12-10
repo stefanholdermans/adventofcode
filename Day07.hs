@@ -24,13 +24,22 @@ calibrate ops = sum . map fst . filter (solvable ops)
 
 -- Part One --
 
-solve :: Equations -> Int
-solve = calibrate [(+), (*)]
+solve1 :: Equations -> Int
+solve1 = calibrate [(+), (*)]
 
 -- Part Two --
 
 (><) :: Int -> Int -> Int
 m >< n = read (show m ++ show n)
 
-solve' :: Equations -> Int
-solve' = calibrate [(+), (*), (><)]
+solve2 :: Equations -> Int
+solve2 = calibrate [(+), (*), (><)]
+
+-- Entry point --
+
+main :: IO ()
+main = do
+  input <- getContents
+  let prob = parse input
+  print (solve1 prob)
+  print (solve2 prob)
