@@ -11,7 +11,7 @@ type Grid = [[Int]]
 parse :: String -> Grid
 parse input = [[read [c] | c <- row] | row <- lines input]
 
--- Auxiliaries
+-- Auxiliaries --
 
 type Pos = (Int, Int)
 
