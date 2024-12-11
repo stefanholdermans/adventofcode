@@ -11,12 +11,6 @@ decode [] = 0
 decode (False : bs) = 2 * decode bs
 decode (True : bs) = 2 * decode bs + 1
 
-bits :: (Integral a) => (a -> b) -> Bits -> b
-bits f = f . decode
-
-unbits :: (Integral a) => (Bits -> b) -> a -> b
-unbits f = f . encode
-
 data Trie a = Trie a (Trie a) (Trie a)
 
 trie :: (Bits -> a) -> Trie a
@@ -32,6 +26,9 @@ untrie (Trie _ _ r) (True : bs) = untrie r bs
 
 memo :: (Integral a) => (a -> b) -> a -> b
 memo = unbits . untrie . trie . bits
+  where
+    bits f = f . decode
+    unbits f = f . encode
 
 memo2 :: (Integral a, Integral b) => (a -> b -> c) -> a -> b -> c
 memo2 f = memo (memo . f)
