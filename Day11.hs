@@ -1,6 +1,3 @@
-import Data.IntMap as IntMap (IntMap, (!))
-import Data.IntMap qualified as IntMap
-
 -- Utilities --
 
 type Bits = [Bool]
