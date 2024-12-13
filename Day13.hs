@@ -26,8 +26,8 @@ parse = map pMachine . chunk 4 . map words . lines
 
 -- Auxiliaries --
 
-solve :: Machine -> Int
-solve ((dxa, dya), (dxb, dyb), (x, y))
+tokens :: Machine -> Int
+tokens ((dxa, dya), (dxb, dyb), (x, y))
   | deta `mod` det /= 0 = 0
   | detb `mod` det /= 0 = 0
   | otherwise = 3 * (deta `div` det) + (detb `div` det)
@@ -39,12 +39,12 @@ solve ((dxa, dya), (dxb, dyb), (x, y))
 -- Part One --
 
 solve1 :: Machines -> Int
-solve1 = sum . map solve
+solve1 = sum . map tokens
 
 -- Part Two --
 
 solve2 :: Machines -> Int
-solve2 = sum . map (solve . correct)
+solve2 = sum . map (tokens . correct)
   where
     correct (da, db, (x, y)) = (da, db, (x + k, y + k))
     k = 10000000000000
