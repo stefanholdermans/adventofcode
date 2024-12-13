@@ -46,7 +46,7 @@ solve1 = sum . map solve
 solve2 :: Machines -> Int
 solve2 = sum . map (solve . correct)
   where
-    correct (ba, bb, (x, y)) = (ba, bb, (x + d, y + d))
+    correct (da, db, (x, y)) = (da, db, (x + d, y + d))
     d = 10000000000000
 
 -- Entry --
