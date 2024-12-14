@@ -54,7 +54,7 @@ solve1 rs = product [count q frame | q <- quadrants bounds]
 -- Part Two --
 
 easterEgg :: Bounds -> [Pos] -> Bool
-easterEgg (w, h) ps = go ps
+easterEgg (w, _) ps = go ps
   where
     n = 30
     go [] = False
