@@ -60,12 +60,12 @@ dpad =
     ('A', (2, 1))
   ]
 
-positions :: Pad -> Code -> [Pos]
-positions pad = (lookup' 'A' pad :) . map (flip lookup' pad)
+enter :: Pad -> Code -> [Pos]
+enter pad = (lookup' 'A' pad :) . map (flip lookup' pad)
 
-npositions, dpositions :: Code -> [Pos]
-npositions = positions npad
-dpositions = positions dpad
+nenter, denter :: Code -> [Pos]
+nenter = enter npad
+denter = enter dpad
 
 type Table = Array (Pos, Pos) Int
 
@@ -97,8 +97,8 @@ eval t = go
     go _ = 0
 
 neval, deval :: Table -> Code -> Int
-neval t = eval t . npositions
-deval t = eval t . dpositions
+neval t = eval t . nenter
+deval t = eval t . denter
 
 chain :: Int -> Table
 chain = ntabulate . cost
