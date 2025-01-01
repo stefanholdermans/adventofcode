@@ -13,7 +13,7 @@ split p xs = case break p xs of
 
 type Height = Int
 
-data Lockbit = Lock [Height] | Key [Height] deriving (Show)
+data Lockbit = Lock [Height] | Key [Height]
 
 type Lockware = [Lockbit]
 
