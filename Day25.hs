@@ -33,7 +33,7 @@ fit (Lock lhs) (Key khs) = all (<= 5) (zipWith (+) lhs khs)
 fit _ _ = False
 
 solve1 :: Lockware -> Int
-solve1 ss = length [(s1, s2) | s1 <- ss, s2 <- ss, fit s1 s2]
+solve1 lw = length [(lb1, lb2) | lb1 <- lw, lb2 <- lw, fit lb1 lb2]
 
 -- Entry --
 
