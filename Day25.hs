@@ -18,7 +18,7 @@ data Lockbit = Lock [Height] | Key [Height] deriving (Show)
 type Lockware = [Lockbit]
 
 parse :: String -> Lockware
-parse input = map pLockbit (split null (lines input))
+parse = map pLockbit . split null . lines
   where
     pLockbit (('#' : _) : ss) = pLock (transpose (init ss))
     pLockbit (('.' : _) : ss) = pKey (transpose (init ss))
