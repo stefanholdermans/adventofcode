@@ -5,9 +5,9 @@ type Equation = (Int, [Int])
 type Equations = [Equation]
 
 parse :: String -> Equations
-parse = map (parseEq . words) . lines
+parse = map (pEqn . words) . lines
   where
-    parseEq (s : ss) = (read (init s), map read ss)
+    pEqn (s : ss) = (read (init s), map read ss)
 
 -- Auxiliaries --
 
