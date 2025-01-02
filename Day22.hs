@@ -5,14 +5,6 @@ import Data.List (tails)
 import Data.Map (Map)
 import Data.Map qualified as Map (elems, fromListWith, unionsWith)
 
--- Utilities --
-
-pairwiseWith :: (a -> a -> b) -> [a] -> [b]
-pairwiseWith f xs = zipWith f xs (tail xs)
-
-windowed :: Int -> [a] -> [[a]]
-windowed k xs = [zs | ys <- tails xs, let zs = take k ys, length zs == k]
-
 -- Parsing --
 
 type Secret = Int
@@ -24,24 +16,26 @@ parse = map read . lines
 
 -- Auxiliaries --
 
-stream :: Secret -> [Secret]
-stream = iterate (flip (foldl f) [6, -5, 11])
+generate :: Int -> Secret -> [Secret]
+generate k seed = take (k + 1) ns
   where
+    ns = iterate (flip (foldl f) [6, -5, 11]) seed
     f n k = (shift n k `xor` n) .&. mask
     mask = shift 1 24 - 1
 
 -- Part One --
 
 solve1 :: Secrets -> Int
-solve1 = sum . map ((!! 2000) . stream)
+solve1 = sum . map (last . generate 2000)
 
 -- Part Two --
 
 solve2 :: Secrets -> Int
 solve2 ns = maximum (Map.elems proceeds)
   where
-    pss = map (map (`mod` 10) . stream) ns
-    wss = map (windowed 4 . take 2000 . pairwiseWith (flip (-))) pss
+    pss = map (map (`mod` 10) . generate 2000) ns
+    wss = map (map (take 4) . tails . changes) pss
+    changes ps = zipWith (-) (tail ps) ps
     proceeds = Map.unionsWith (+) (zipWith tabulate pss wss)
     tabulate ps ws = Map.fromListWith (flip const) (zip ws (drop 4 ps))
 
