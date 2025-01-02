@@ -4,8 +4,8 @@ import Data.Maybe (fromJust)
 
 -- Utilities --
 
-lookup' :: (Eq a) => a -> [(a, b)] -> b
-lookup' x = fromJust . lookup x
+find :: (Eq a) => a -> [(a, b)] -> b
+find x = fromJust . lookup x
 
 interleavings :: [a] -> [a] -> [[a]]
 interleavings [] ys = [ys]
@@ -61,7 +61,7 @@ dpad =
   ]
 
 enter :: Pad -> Code -> [Pos]
-enter pad = (lookup' 'A' pad :) . map (flip lookup' pad)
+enter pad = (find 'A' pad :) . map (flip find pad)
 
 nenter, denter :: Code -> [Pos]
 nenter = enter npad
