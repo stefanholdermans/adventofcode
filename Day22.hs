@@ -31,9 +31,9 @@ solve1 = sum . map (last . generate 2000)
 -- Part Two --
 
 solve2 :: Secrets -> Int
-solve2 ns = maximum (Map.elems proceeds)
+solve2 seeds = maximum (Map.elems proceeds)
   where
-    pss = map (map (`mod` 10) . generate 2000) ns
+    pss = map (map (`mod` 10) . generate 2000) seeds
     wss = map (map (take 4) . tails . changes) pss
     changes ps = zipWith (-) (tail ps) ps
     proceeds = Map.unionsWith (+) (zipWith tabulate pss wss)
