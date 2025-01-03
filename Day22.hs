@@ -2,8 +2,8 @@
 
 import Data.Bits (shift, xor, (.&.))
 import Data.List (tails)
-import Data.Map (Map)
-import Data.Map qualified as Map (elems, fromListWith, unionsWith)
+import Data.Map.Strict (Map)
+import Data.Map.Strict qualified as Map (elems, fromListWith, unionsWith)
 
 -- Parsing --
 
